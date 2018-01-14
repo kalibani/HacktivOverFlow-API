@@ -10,6 +10,7 @@ const mongoose = require('mongoose')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const question = require('./routes/questions')
+const answer = require('./routes/answers')
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use(cors())
 app.use('/', index);
 app.use('/users/auth', users);
 app.use('/api/question', question);
+app.use('/api/answer', answer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
