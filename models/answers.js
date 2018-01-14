@@ -14,9 +14,8 @@ let answerSchema = new Schema({
   isi:{
     type: String
   },
-  vote: [{
-    user: { type: Schema.Types.ObjectId, ref: 'User'}
-  }]
+  upvote: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+  downvote: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
 module.exports = mongoose.model('Answer', answerSchema);

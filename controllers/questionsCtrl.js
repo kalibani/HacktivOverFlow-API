@@ -3,6 +3,9 @@ const Question = require('../models/questions');
 class QuestionAPI {
   static getQuestion(req, res){
     Question.find()
+    .populate('posted_by')
+    .populate('upvote')
+    .populate('downvote')
     .then((dataQuestion) => {
       res.status(200).json(dataQuestion)
     })
@@ -49,7 +52,6 @@ class QuestionAPI {
         res.status(403).send('Forbidden')
       }
     })
-
   }
 
   static deleteQuestion(req, res){
@@ -63,6 +65,32 @@ class QuestionAPI {
       }else {
         res.status(403).send('Forbidden')
       }
+    })
+  }
+
+  static likes(req, res) {
+    Question.findOneAndUpdate(req.params.id, {
+      $addToSet : {upvote: req.decoded.userId},
+      $pull : {downvote: req.decoded.userId}
+    },{new: true})
+    .then(data => {
+      res.status(200).json({message: 'voted', data})
+    })
+    .catch(err=>{
+      res.status(500).send(err)
+    })
+  }
+
+  static dislike(req, res) {
+    Question.findOneAndUpdate(req.params.id, {
+      $addToSet : {downvote: req.decoded.userId},
+      $pull : {upvote: req.decoded.userId}
+    },{new: true})
+    .then(data => {
+      res.status(200).json({message: 'voted', data})
+    })
+    .catch(err=>{
+      res.status(500).send(err)
     })
   }
 

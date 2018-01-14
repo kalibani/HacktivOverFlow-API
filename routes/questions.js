@@ -8,5 +8,7 @@ router.get('/:id', question.getQuestionbyId)
 router.post('/', middleware.authorization, question.createQuestion)
 router.put('/update/:id', middleware.authorization, question.updateQuestion)
 router.delete('/:id', middleware.authorization, question.deleteQuestion)
+router.post('/upvote/:id', middleware.authorization, question.likes)
+router.post('/downvote/:id', middleware.authorization, question.dislike)
 
 module.exports = router;
