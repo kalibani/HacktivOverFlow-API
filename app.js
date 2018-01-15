@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
 app.use('/', index);
-app.use('/users/auth', users);
+app.use('/api/auth', users);
 app.use('/api/question', question);
 app.use('/api/answer', answer);
 

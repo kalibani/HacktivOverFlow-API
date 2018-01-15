@@ -21,13 +21,13 @@ class UserCtrl {
     ]})
     .then((dataUser)=>{
       if(!dataUser){
-        res.send('Unregistered Email/Username, Please Register First!')
+        res.json({message: 'Unregistered Username, Please Register First!'})
       }else {
         dataUser.comparePassword(req.body.password, (err, success) => {
           if (err || !success) {
             console.log(err)
             return res.status(200).json({
-              message: 'Authentication failed, Email/Username or password did not match'
+              message: 'Authentication failed, Username or password did not match'
             })
           }else {
             let payload = {
@@ -47,6 +47,11 @@ class UserCtrl {
     .catch(err => {
       console.log(err)
     })
+  }
+
+  static getProfile(req, res){
+    console.log('bom');
+    res.json(req.decoded)
   }
 
 }
