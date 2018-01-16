@@ -69,12 +69,13 @@ class QuestionAPI {
   }
 
   static likes(req, res) {
-    Question.findOneAndUpdate(req.params.id, {
+    Question.findOneAndUpdate({_id: req.params.id}, {
       $addToSet : {upvote: req.decoded.userId},
       $pull : {downvote: req.decoded.userId}
     },{new: true})
     .then(data => {
-      res.status(200).json({message: 'voted', data})
+      console.log('ini', data);
+      res.status(200).json({message: 'likes', data})
     })
     .catch(err=>{
       res.status(500).send(err)
@@ -82,12 +83,12 @@ class QuestionAPI {
   }
 
   static dislike(req, res) {
-    Question.findOneAndUpdate(req.params.id, {
+    Question.findOneAndUpdate({_id: req.params.id}, {
       $addToSet : {downvote: req.decoded.userId},
       $pull : {upvote: req.decoded.userId}
     },{new: true})
     .then(data => {
-      res.status(200).json({message: 'voted', data})
+      res.status(200).json({message: 'dislike', data})
     })
     .catch(err=>{
       res.status(500).send(err)

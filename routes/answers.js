@@ -7,7 +7,7 @@ router.get('/', answer.getAnswer)
 router.get('/:id', answer.getAnswerbyId)
 router.post('/', middleware.authorization, answer.createAnswer)
 router.delete('/:id', middleware.authorization, answer.deleteAnswer)
-router.post('/upvote/:id', middleware.authorization, answer.likes)
-router.post('/downvote/:id', middleware.authorization, answer.dislike)
+router.put('/upvote/:id', middleware.authorization, answer.likes)
+router.put('/downvote/:id', middleware.authorization, answer.dislike)
 
 module.exports = router;

@@ -31,7 +31,8 @@ class AnswerAPI {
   }
 
   static getAnswerbyId(req, res){
-    Answer.findById({questionId:req.params.id})
+    let id = {questionId:req.params.id}
+    Answer.findById(questionId)
     .populate('questionId')
     .populate('posted_by')
     .populate('upvote')
@@ -59,12 +60,13 @@ class AnswerAPI {
   }
 
   static likes(req, res) {
-    Answer.findOneAndUpdate(req.params.id, {
+    console.log('bom');
+    Answer.findOneAndUpdate({_id: req.params.id}, {
       $addToSet : {upvote: req.decoded.userId},
       $pull : {downvote: req.decoded.userId}
     },{new: true})
     .then(data => {
-      res.status(200).json({message: 'voted', data})
+      res.status(200).json({message: 'likes', data})
     })
     .catch(err=>{
       res.status(500).send(err)
@@ -72,12 +74,12 @@ class AnswerAPI {
   }
 
   static dislike(req, res) {
-    Answer.findOneAndUpdate(req.params.id, {
+    Answer.findOneAndUpdate({_id: req.params.id}, {
       $addToSet : {downvote: req.decoded.userId},
       $pull : {upvote: req.decoded.userId}
     },{new: true})
     .then(data => {
-      res.status(200).json({message: 'voted', data})
+      res.status(200).json({message: 'dislike', data})
     })
     .catch(err=>{
       res.status(500).send(err)
