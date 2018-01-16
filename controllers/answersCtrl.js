@@ -32,8 +32,7 @@ class AnswerAPI {
 
   static getAnswerbyId(req, res){
     let id = {questionId:req.params.id}
-    Answer.findById(questionId)
-    .populate('questionId')
+    Answer.find(id)
     .populate('posted_by')
     .populate('upvote')
     .populate('downvote')
